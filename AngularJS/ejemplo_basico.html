@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html ng-app>  <!-- utilizamos la directiva ngApp para indicar que esto es la aplicacion -->
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+    <!-- Pintamos la caja de texto-->
+    <input type="text" ng-model="nombre" /> <!-- con ngModel mandamos informacion de la vista al modelo -->
+
+    <!-- Pintamos un mensaje de bienvenida-->
+    <p>Bienvenido  {{nombre}}</p>  <!-- con la doble llave hacmes lo contrario, traer datos desde el modelo a la vista -->
+
+
+    <!-- Cargamos la libreria de AngularJs -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
+</body>
+</html>
