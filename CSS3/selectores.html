@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Selectores</title>
+    <style>
+        /*seleccionamos aquellos enlaces cuyo href comience por nov */
+        a[href^= "#nov"] {color:red;}
+
+        /*seleccionamos aquellos enlaces cuyo href termine por tas */
+        a[href$="tas"] {font-size: 24px; }
+
+        /*seleccionamos aquellos enlaces cuyo href contenga ini */
+        a[href*="ini"] {text-decoration:line-through; }
+
+        /*seleccionamos la primera letra de los parrafos */
+        p::first-letter {font-size:52px; }
+
+        /*seleccionamos la primera linea de los parrafos */
+        p::first-line {color: #1e8018; }
+
+        /*seleccionamos el texto de los parrafos  */
+        p::selection {background: red; color:white;}
+
+    </style>
+</head>
+<body>
+
+<!-- Barra de navegacion -->
+    <nav>
+        <a href="#novedades">Novedades</a>
+        <a href="#entrevistas">Entrevistas</a>
+        <a href="#opinion">Artículos de opinion</a>
+    </nav>
+
+<!-- Parrafo -->
+<p>
+    Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsumha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor(N. del T. persona que se dedica a la imprenta) desconocido usó una galería de textos y los mezclóde tal manera que logró hacer un libro de textos especimen. No sólo sobrevivió 500 años, sino quetambien ingresó como texto de relleno en documentos electrónicos, quedando esencialmente igual al original.
+</p>
+
+</body>
+</html>
