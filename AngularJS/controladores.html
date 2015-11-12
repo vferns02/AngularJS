@@ -2,7 +2,7 @@
 <html>
 <head lang="en">
     <meta charset="UTF-8">
-    <title>Controladores</title>
+    <title>Controladores y Scopes</title>
 </head>
 <body ng-app="test">
 
@@ -14,7 +14,18 @@
         <a href="#">{{ nombreSeccion3 }}</a>
         <button ng-click="mostrarMensaje()">Mostrar mensaje</button>
     </nav>
+    <!--jerarquia de controladores-->
+    <div ng-controller="ControladorPadre">
+        <p>Soy un controlador</p>
 
+        <!--al hacer click enviamos una notificacion hacia abajo en la jerarquia de scopes-->
+        <button ng-click="enviarMensajeAlHijo()">Notificar al hijo</button>
+
+        <div ng-controller="ControladorHijo">
+            <p>Y yo su hijo!!</p>
+            <button ng-click="eviarMensajeAlPadre()">Notificar al padre</button>
+        </div>
+    </div>
 
 
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
@@ -38,6 +49,31 @@
         };
 
     });
+
+    angular.module("test").controller("ControladorPadre", function($scope){
+        $scope.enviarMensajeAlHijo = function(){
+          $scope.$broadcast("EventoHaciaAbajo","Hola hijo!!");
+        };
+
+        $scope.$on("EventoHaciaArriba",function(evento,datos){
+
+            evento.preventDefault();
+            alert(datos);
+        });
+    });
+    angular.module("test").controller("ControladorHijo", function($scope){
+        $scope.$on("EventoHaciaAbajo", function(evento,datos){
+
+            //con eveneto.preventDefault() paramos la propagacion del evento.
+            evento.preventDefault();
+            alert(datos);
+        });
+        $scope.eviarMensajeAlPadre = function () {
+            $scope.$emit("EventoHaciaArriba", "Hola Padre");
+        };
+
+    });
+
 
 </script>
 </body>
