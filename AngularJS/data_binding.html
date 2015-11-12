@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Data Binding</title>
+</head>
+<body ng-app="test">
+
+
+    <!-- Pruebas de two-wat data binding y one-time binding-->
+    <div ng-controller="Sincronizacion">
+
+        <!--Ejemmplo de two-way databinding-->
+        <p>Ejemplo de two-way databinding</p>
+        <input type="text" ng-model="twoWayDatabinding.nombre"/>
+        <span>Buenas noches {{ twoWayDatabinding.nombre }}</span>
+
+        <!--Ejemmplo de one-way binding-->
+        <input type="text" ng-model="oneTimeBinding.nombre"/>
+        <span>Buenos dias {{ ::oneTimeBinding.nombre }}</span>
+
+
+        <!--Ejemmplo de ngModelOption-->
+    <p>Ejemplo de ngModelOption</p>
+
+        <!--Ejemmplo de updateON, debems salir del cuadro para disparar el evento-->
+
+        <input type="text" ng-model="ngModelOptions.nombre" ng-model-options="{ updateOn:'blur' }"/>
+        <span>Buenas tardes {{ngModelOptions.nombre}}</span>
+
+        <!--Ejemmplo de debounce, espera un segundo para disparar el evento-->
+        <input type="text" ng-model="ngModelOptions.mascota" ng-model-options="{ debounce: 1000 }"/>
+        <span>Tu mascota se llama {{ngModelOptions.mascota}}</span>
+
+
+    </div>
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
+<script>
+
+    //creamos una aplicacion test
+    angular.module("test",[]);
+
+    angular.module("test").controller("Sincronizacion",function($scope){
+
+    //Creamos los objetos vacios
+     $scope.twoWayDatabinding = {};
+     $scope.oneTimeBinding = {};
+
+    //los $watch atienden una expresion y actian cuando el valor cambia
+     $scope.$watch(
+             function() {return $scope.oneTimeBinding.nombre;},
+             function(value) {if (value) {window.console.log(value); } }
+     );
+    });
+
+</script>
+
+</body>
+</html>
