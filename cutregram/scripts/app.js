@@ -1,7 +1,8 @@
 //Definicion de la aplicacion
-angular.module("cutregram",[]);
+angular.module("cutregram",["ngRoute"]);
 
-
+//En fase de config, inyectamos $httpProvider para configurar las cabeceras por defecto de los distintos
+//metodos HTTP del servicio $http, q usamos para pedir los datos al servido
 angular.module("cutregram").config(function($httpProvider){
 
     //Configuramos el servicio $http para que envie la cabecera necesaria.
@@ -15,4 +16,27 @@ angular.module("cutregram").config(function($httpProvider){
     $httpProvider.defaults.headers.put = {};
     $httpProvider.defaults.headers.patch = {};
 
+});
+
+//En fase de config inyectamos $routeProvider para configurar las rutas de la app.
+
+angular.module("cutregram").config(function($routeProvider){
+
+    //Voy a definir la ruta de "Todos los Posts"
+    $routeProvider.when("/todos",{
+       controller:"PostCollectionCtrl",
+       templateUrl:"views/PostCollection.html"
+    });
+
+
+    //Defino la ruta de "Mis posts"
+    $routeProvider.when("/mios",{
+       controller: "MisPostsCtrl" ,
+       templateUrl:"views/MyPosts.html"
+    });
+
+    //Configuramos una ruta por defecto
+    $routeProvider.otherwise({
+        redirectTo:"/todos"
+    });
 });

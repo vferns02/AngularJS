@@ -1,0 +1,18 @@
+
+<div>
+    <!--Pintamos una tabla para mostrar los posts -->
+    <table class="table">
+        <!--Con la directiva ngRepeat iteramos sobre la coleccion de posts para pintar cada linea(post)
+         de la tabla-->
+        <tr ng-repeat="post in posts">
+
+            <!-- Con la directiva ngIf pintamos el elemento qu el ausa cunado su contenido resuelve como true,
+            sino no lo pinta -->
+            <td><img ng-src="{{post.image_url}}" ng-if="post.image_url" alt ="Imagen" width="64" class="img-rounded"/></td>
+            <td>{{post.text}}</td>
+            <td>{{post.author}}</td>
+            <td>Me gusta: {{post.likes}}</td>
+            <td>No me gusta: {{post.dislikes}}</td>
+        </tr>
+    </table>
+</div>
