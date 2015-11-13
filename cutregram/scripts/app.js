@@ -25,14 +25,28 @@ angular.module("cutregram").config(function($routeProvider){
     //Voy a definir la ruta de "Todos los Posts"
     $routeProvider.when("/todos",{
        controller:"PostCollectionCtrl",
-       templateUrl:"views/PostCollection.html"
+       templateUrl:"views/PostCollection.html",
+        //en "resolve" establecemos todas aquellas dependencias que tenga el controlador.
+        //Tenemos que usar la anotacion de array en linea.
+       resolve:{                          //Lo que hay en el resolve se ejecuta antes de la navegacion
+           Posts: ["$http",function($http){
+               return $http.get("http://cutregram-sp.appspot.com/api/1/posts");
+           }]
+       }
     });
 
 
     //Defino la ruta de "Mis posts"
     $routeProvider.when("/mios",{
        controller: "MisPostsCtrl" ,
-       templateUrl:"views/MyPosts.html"
+       templateUrl:"views/MyPosts.html",
+        //en "resolve" establecemos todas aquellas dependencias que tenga el controlador.
+        //Tenemos que usar la anotacion de array en linea.
+       resolve:{
+           Posts:["$http", function($http){
+               return  $http.get("http://cutregram-sp.appspot.com/api/1/posts/me");
+           }]
+       }
     });
 
     //Configuramos una ruta por defecto

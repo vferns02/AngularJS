@@ -17,12 +17,15 @@
             <h1>Cutregram</h1>
         </header>
         <!-- Barra de navegacion-->
-        <nav>
+        <nav ng-controller="BarraNavegacionCtrl">
+
+            <!-- La directiva ngClass espera un objeto JSON donde las keys sean las clases CSS a usar
+            y el valor de dichas keys la condicion que hara que se usen o no -->
             <ul class="nav nav-tabs">
-                <li role="presentation">
+                <li role="presentation" ng-class="{ 'active': rutaEsTodos() }">
                     <a href="#/todos">Todos Los Posts</a>
                 </li>
-                <li role="presentation">
+                <li role="presentation" ng-class="{ 'active': rutaEsMio () }">
                     <a href="#/mios">Mis Posts</a>
                 </li>
             </ul>
@@ -42,6 +45,7 @@
     <!-- Cargamos los controladores-->
     <script src="scripts/controllers/PostCollection.js"></script>
     <script src="scripts/controllers/MyPosts.js"></script>
+    <script src="scripts/controllers/BarraNavegacion.js"></script>
 
 
 </body>
