@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Services, Factories y Providers</title>
+</head>
+<body ng-app="test">
+    <div ng-controller="EjemplotCtrl">
+        <div><strong>Dato desde Servicio: </strong>{{ datoDesdeServicio }}</div>
+        <div><strong>Dato desde factory: </strong>{{ datoDesdeFactory }}</div>
+        <div><strong>Dato desde provider: </strong>{{datoDesdeProvider}}</div>
+    </div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
+<script>
+    //creamos el modulo test
+    angular.module("test", []);
+
+    //configuramos el provider
+    angular.module("test").config(function(EjemploProviderProvider){
+        EjemploProviderProvider.establecerMensaje("Soy un mensaje desde un provider")
+    });
+
+    //ejemplo de servicio
+    angular.module("test").service("EjemploServicio", function(){
+
+
+        //solo aquello que sea publico, que cuelge de THIS, se puede usar desde fuera
+        this.miFuncion = function (){
+            return "Soy una funcion publica en un servicio";
+        }
+    });
+
+    //Ejemplo de factory
+
+    angular.module("test").factory("EjemploFactory", function(){
+
+        //Los factory pueden retornar cualquier tipo.
+        return 2;
+    });
+
+    //Ejemplo de provider.
+    angular.module("test").provider("EjemploProvider" , function(){
+
+        var mensaje = "";
+       return {
+           //Todas las propiedades distintas a $get estan disponibles en fase de config
+           establecerMensaje:function(valor){
+            mensaje= valor;
+           },
+           //La propiedad $get representa el factory qe se inyecta en fase de run.
+           $get:[function(){
+               return {
+                 obtenerMensaje: function () {
+                     return mensaje;
+                 }
+               };
+
+           }]
+       };
+    });
+    //Creamos un controlador
+    angular.module("test").controller("EjemplotCtrl", function($scope,EjemploServicio,EjemploFactory,EjemploProvider){
+
+        //Valor recogido de un servicio
+        $scope.datoDesdeServicio = EjemploServicio.miFuncion();
+
+        //Valor recogido de un factory
+
+        $scope.datoDesdeFactory = EjemploFactory;
+
+
+        // Valor recogido de un provider
+        $scope.datoDesdeProvider = EjemploProvider.obtenerMensaje();
+    });
+</script>
+
+</body>
+</html>
