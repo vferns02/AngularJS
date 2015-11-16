@@ -4,6 +4,12 @@ angular.module("cutregram").controller("PostCollectionCtrl",function($scope,Post
 
     $scope.posts = Posts.data;
 
+    //Redirigir el navegador al detalle del post indicado.
+    $scope.navegar = function(idPost){
+        //TODO:Navegar.
+        alert("Navegar al post " + idPost);
+
+    };
 });
 
         //Las entidades post vienen representadas por el siguiente JSON.

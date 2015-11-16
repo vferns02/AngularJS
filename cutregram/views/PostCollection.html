@@ -20,6 +20,7 @@
         <!-- usamos una directiva "elementoPost" por cad post de la coleccion -->
         <tr ng-repeat="post in posts | filter: {author:filtroPorAutor}"
            elemento-post
-           post="post"></tr>
+           post="post"
+           on-post-click="navegar(idPost)"></tr>
     </table>
 </div>

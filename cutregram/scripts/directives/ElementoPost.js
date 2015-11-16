@@ -11,11 +11,15 @@ angular.module("cutregram").directive("elementoPost", function (Backend){
 
         //Con scope establecemos la interfaz de comunicacion
         scope:{
-            post: "=" //Con = establecemos enlace bidireccional.
+            post: "=", //Con = establecemos enlace bidireccional.
+            onPostClick: "&" // Con & establecemos notificacion desde la directiva hacia el scope padre.
         },
         //En el link establecemos la logica de la directiva y manipulamos el DOm en caso de necesitarlo
         link: function(scope){
 
+            scope.notificarClick = function(){
+                scope.onPostClick({ idPost:scope.post.id });
+            };
             scope.meGusta = function() {
                 Backend.sumarMeGusta(scope.post.id).then(
                     function () {
