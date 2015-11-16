@@ -14,8 +14,17 @@
             <td><img ng-src="{{post.image_url}}" ng-if="post.image_url" alt ="Imagen" width="124" class="img-rounded"/></td>
             <td>{{post.text}}</td>
             <td>{{post.author}}</td>
-            <td>Me gusta: {{post.likes}}</td>
-            <td>No me gusta: {{post.dislikes}}</td>
+
+            <td>
+                <button class="btn btn-primary" type="button" ng-click="meGusta(post)">
+                    Me gusta <span class="badge">{{post.likes}}</span>
+                </button>
+            </td>
+            <td>
+                <button class="btn btn-danger" type="button" ng-click="noMeGusta(post)">
+                    No me gusta <span class="badge"> {{post.dislikes}}</span>
+                </button>
+            </td>
         </tr>
     </table>
 </div>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title> Filtros </title>
+</head>
+<body ng-app="test">
+<div ng-controller="EjemploFiltros">
+    <div><strong>Filtro currency: </strong>{{12.4775465 | currency }}</div>
+    <div><strong>Filtro uppercase: </strong>{{"asdasd" | uppercase}}</div>
+    <div><strong>Filtro date: </strong>{{ ahora | date : "medium"}}</div>
+
+    <div>
+        <ul>
+            <li ng-repeat="usuario in usuarios | orderBy:'+nombre'">
+                {{usuario.nombre}}
+
+            </li>
+        </ul>
+    </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
+
+<!-- Cargamos la libreria de regin españa -->
+<script src ="angular-locale_es-es.js"></script>
+
+<script>
+    angular.module("test",[]);
+
+    angular.module("test").controller("EjemploFiltros" , function ($scope){
+        $scope.ahora = new Date().getTime();
+
+        $scope.usuarios= [{
+            nombre:"jose"
+        }, {
+            nombre: "paci"
+        }, {
+            nombre: "alvaro"
+        },{
+            nombre:"luis"
+        }];
+
+    });
+</script>
+
+
+</body>
+</html>
