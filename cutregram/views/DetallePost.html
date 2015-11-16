@@ -1,4 +1,4 @@
-
+<!-- este articulo hace referencia a los detalles del post-->
 <article>
     <header>
         <button class="btn btn-link" ng-click="volver()">Volver</button>
@@ -13,3 +13,28 @@
 
     </footer>
 </article>
+<!-- Este div hace referencia a los comentarios del post-->
+<div>
+    <header>
+        <h4>Comentarios</h4>
+    </header>
+    <!--Formulario para añadir comentario-->
+    <form class="form-inline">
+        <div class="form-group">
+            <label class="sr-only" for="texto-comentario">Email address</label>
+            <input type="text" class="form-control" id="texto-comentario" placeholder="Escribe tu comentario..."
+                   ng-model="comentario">
+        </div>
+
+        <button type="submit" class="btn btn-default" ng-click="enviarComentario()">Enviar</button>
+    </form>
+
+
+    <!--Coleccion de comentarios-->
+    <div class="list-group">
+        <a href="#" class="list-group-item " ng-repeat="comentario in post.comments">
+            <h4 class="list-group-item-heading">{{::comentario.text}}</h4>
+            <p class="list-group-item-text">{{post.author | Firma:post.created }}</p>
+        </a>
+    </div>
+</div>
