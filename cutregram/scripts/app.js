@@ -44,6 +44,19 @@ angular.module("cutregram").config(function($routeProvider){
        }
     });
 
+    //Definir la ruta de DetallePost
+    $routeProvider.when("/detalle/:idPost",{
+        controller:"DetallePostCtrl",
+        templateUrl:"views/DetallePost.html" ,
+        resolve:{
+            Post:["Backend","$route", function(Backend,$route){
+
+                return Backend.obtenerPost($route.current.params.idPost);
+            }]
+
+        }
+    });
+
     //Configuramos una ruta por defecto
     $routeProvider.otherwise({
         redirectTo:"/todos"

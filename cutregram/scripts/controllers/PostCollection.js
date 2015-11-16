@@ -1,13 +1,12 @@
 
 //Controlador encargado de la lógica correspondiente con vista de colecciones de posts.
-angular.module("cutregram").controller("PostCollectionCtrl",function($scope,Posts){
+angular.module("cutregram").controller("PostCollectionCtrl",function($scope,Posts,$location){
 
     $scope.posts = Posts.data;
 
     //Redirigir el navegador al detalle del post indicado.
     $scope.navegar = function(idPost){
-        //TODO:Navegar.
-        alert("Navegar al post " + idPost);
+       $location.path("/detalle/"+ idPost);
 
     };
 });
