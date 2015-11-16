@@ -2,7 +2,33 @@
 //Controlador encargado de la lógica correspondiente con vista de colecciones de posts.
 angular.module("cutregram").controller("PostCollectionCtrl",function($scope,Posts,$location){
 
-    $scope.posts = Posts.data;
+    //Almacenamos en local la coleccion de post completa para que n se muestren tods directamnte
+    var posts= Posts.data;
+
+    //Establecemos las propiedades del paginador
+    $scope.paginador = {
+
+        //Cambiamos de pagina
+        cambioDePagina:function(){
+            //Obtenemos el primer y ultimo elemento de la pagina a mostrar
+            var primero = ($scope.paginador.paginaActual - 1)* $scope.paginador.elementosPorPagina;
+            var ultimo = primero + $scope.paginador.elementosPorPagina;
+
+            //Establecemos en al vista la pagina seleccionada
+            $scope.posts = posts.slice(primero , ultimo);
+        },
+
+        //Pagina actual
+        paginaActual:1,
+
+        //total de elementos (post)
+        totalElementos:posts.length,
+
+        //elementos por pagina
+        elementosPorPagina: 5
+    };
+    //forzadmos el cambio de pagina para que traiga la 1º pagina al inicio
+    $scope.paginador.cambioDePagina();
 
     //Redirigir el navegador al detalle del post indicado.
     $scope.navegar = function(idPost){
