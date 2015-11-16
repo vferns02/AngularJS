@@ -3,24 +3,19 @@ angular.module("cutregram",["ngRoute"]);
 
 //En fase de config, inyectamos $httpProvider para configurar las cabeceras por defecto de los distintos
 //metodos HTTP del servicio $http, q usamos para pedir los datos al servido
-angular.module("cutregram").config(function($httpProvider,Properties){
+angular.module("cutregram").config(function(BackendProvider,Properties){
 
-    //Configuramos el servicio $http para que envie la cabecera necesaria.
-    // configurar http para que todas las peticiones qu hacems a traves de ese servicio metan la cabecera api-key
-    $httpProvider.defaults.headers.common = {
-        "X-Cutregram-Api-Key":Properties.apiKey
-    };
+   BackendProvider.establecerApiKey(Properties.apiKey);
+   BackendProvider.habilitarPeticionesCors();
+   BackendProvider.establecerUrlBackend(Properties.backendUrl);
 
-    //Configuramos las cabeceras por defecto para evitar problemas de CORS. (cruce de dominios)
-    $httpProvider.defaults.headers.post = {};
-    $httpProvider.defaults.headers.put = {};
-    $httpProvider.defaults.headers.patch = {};
+
 
 });
 
 //En fase de config inyectamos $routeProvider para configurar las rutas de la app.
 
-angular.module("cutregram").config(function($routeProvider,Properties){
+angular.module("cutregram").config(function($routeProvider){
 
     //Voy a definir la ruta de "Todos los Posts"
     $routeProvider.when("/todos",{
@@ -29,11 +24,9 @@ angular.module("cutregram").config(function($routeProvider,Properties){
         //en "resolve" establecemos todas aquellas dependencias que tenga el controlador.
         //Tenemos que usar la anotacion de array en linea.
        resolve:{                          //Lo que hay en el resolve se ejecuta antes de la navegacion
-           Posts: ["$http",function($http){
-               return $http.get(Properties.backendUrl + "/posts",{
-                   cache:true
-               });
-           }]
+           Posts: ["Backend",function(Backend){
+              return Backend.obtenerTodosLosPosts();
+           }]  //Aqui estamos en fase de run
        }
     });
 
@@ -45,10 +38,8 @@ angular.module("cutregram").config(function($routeProvider,Properties){
         //en "resolve" establecemos todas aquellas dependencias que tenga el controlador.
         //Tenemos que usar la anotacion de array en linea.
        resolve:{
-           Posts:["$http", function($http){
-               return  $http.get(Properties.backendUrl + "/posts/me",{
-                   cache:true
-               });
+           Posts:["Backend", function(Backend){
+              return Backend.obtenerMisPosts();
            }]
        }
     });
