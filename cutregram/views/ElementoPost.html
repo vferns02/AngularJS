@@ -1,0 +1,21 @@
+<tr>
+    <td><img ng-src="{{post.image_url}}" ng-if="post.image_url" alt ="Imagen" width="124" class="img-rounded"/></td>
+    <td>
+        <div>{{post.text}}</div>
+        <div>
+            <small>
+                {{post.author | Firma:post.created}}
+            </small>
+        </div>
+    </td>
+    <td>
+        <button class="btn btn-primary" type="button" ng-click="meGusta(post)">
+            Me gusta <span class="badge">{{post.likes}}</span>
+        </button>
+    </td>
+    <td>
+        <button class="btn btn-danger" type="button" ng-click="noMeGusta(post)">
+            No me gusta <span class="badge"> {{post.dislikes}}</span>
+        </button>
+    </td>
+</tr>

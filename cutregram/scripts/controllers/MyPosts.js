@@ -4,21 +4,5 @@ angular.module("cutregram").controller("MisPostsCtrl",function($scope,Posts,Back
 
     $scope.posts = Posts.data;
 
-    //sumamos un me gusta la post
-    $scope.meGusta = function(post) {
-        Backend.sumarMeGusta(post.id).then(
-            function (respuesta) {
-                post.likes++;
-            }
-        );
 
-    };
-    //Sumamos un no me gusta al post
-    $scope.noMeGusta = function(post){
-        Backend.sumarNoMeGusta(post.id).then(
-            function(respuesta){
-                post.dislike++;
-            }
-        );
-    };
 });
