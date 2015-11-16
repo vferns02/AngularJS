@@ -3,17 +3,32 @@
     <header>
         <h2>Todos</h2>
     </header>
+
+    <!-- Pintamos una caja de texto para pintar por autor -->
+    <form class="form-inline">
+        <div class="form-group">
+            <label for="filtroAutor">Autor del post</label>
+            <input type="text" id="filtroAutor" ng-model="filtroPorAutor" placeholder="Perico"/>
+        </div>
+
+
     <!--Pintamos una tabla para mostrar los posts -->
     <table class="table">
         <!--Con la directiva ngRepeat iteramos sobre la coleccion de posts para pintar cada linea(post)
          de la tabla-->
-        <tr ng-repeat="post in posts">
+        <tr ng-repeat="post in posts | filter: {author:filtroPorAutor}">
 
             <!-- Con la directiva ngIf pintamos el elemento qu el ausa cunado su contenido resuelve como true,
             sino no lo pinta -->
             <td><img ng-src="{{post.image_url}}" ng-if="post.image_url" alt ="Imagen" width="124" class="img-rounded"/></td>
-            <td>{{post.text}}</td>
-            <td>{{post.author}}</td>
+            <td>
+                <div>{{post.text}}</div>
+                <div>
+                    <small>
+                    {{post.author | Firma:post.created}}
+                    </small>
+                </div>
+            </td>
             <td>
                 <button class="btn btn-primary" type="button" ng-click="meGusta(post)">
                     Me gusta <span class="badge">{{post.likes}}</span>
