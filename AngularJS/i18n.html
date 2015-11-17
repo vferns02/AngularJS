@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Internacionalizacion de aplicaciones en AngularJs</title>
+</head>
+<body ng-app="test">
+
+    <div ng-controller="TraduccionCtrl">
+
+        <!-- usamos AngularTranslate como un filtro-->
+        <div><strong>Traducción con filtro: </strong>{{ "saludo" | translate }}</div>
+
+        <!--Usamos AngularTranslate como directiva-->
+       <div><strong>Traduccion con directiva: </strong><span translate="despedida"></span></div>
+
+        <!--Usamos AngularTransalate como servicio -->
+        <div >
+            <strong>Traduccion con servicio:</strong>{{traduccion}}
+        </div>
+
+        <!-- Pintamos algunos datos regionales-->
+        <div><strong>Divisa:</strong> {{ 12.456 | currency }} </div>
+        <div><strong>Fecha:</strong> {{ fecha | date:"medium"}} </div>
+        <button ng-click="cambiarIdioma()">Cambiar idioma</button>
+    </div>
+
+    <!-- Cargamos la libreria Angular translate-->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
+
+    <!-- Cargamos la libreria Angular translate-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-translate/2.8.1/angular-translate.min.js"></script>
+
+    <!--Cargams la libreria Angular Dynamic Locale-->
+    <script src="tmhDynamicLocale.js"></script>
+
+    <script>
+        angular.module("test",['pascalprecht.translate',"tmh.dynamicLocale"]);
+
+        //configuramos los diccionarios de idioma para AngularTranslate
+        angular.module("test").config(function($translateProvider){
+            $translateProvider.translations("es-es",{
+                    "saludo":"Hola",
+                    "despedida": "Adios, mundo",
+                    "gritodeguerra":"A la carga"
+            });
+            $translateProvider.translations("en-us",{
+                     "saludo":"Hello",
+                     "despedida":"Bye,Bye",
+                    "gritodeguerra":"Aaaaaaaaaaaasgggggggg"
+            });
+            $translateProvider.preferredLanguage("en-us");
+        });
+
+        //Configuramos Angular Dynamic Locale para que cargue los documentos de locale
+        angular.module("test").config(function(tmhDynamicLocaleProvider){
+            tmhDynamicLocaleProvider.localeLocationPattern("angular-locale_{{locale}}.js");
+        });
+
+        //controladro para usar el servicio translate
+        angular.module("test").controller("TraduccionCtrl",function($scope,$translate,tmhDynamicLocale){
+
+            var idioma="es-es";
+            $scope.fecha= Date.now();
+
+           $translate(["gritodeguerra","saludo"]).then(
+              function(traducciones){
+                  $scope.traduccion=traducciones.gritodeguerra;
+              }
+           );
+            $scope.cambiarIdioma = function(){
+
+                //si el idioma actual es español, traduzco al ingles
+                if (idioma==="es-es"){
+                    idioma= "en-us"
+                }//Si el idioma actial e singles lo traduzco a español
+                else  {
+                    idioma = "es-es"
+
+                }
+                tmhDynamicLocale.set(idioma);
+                $translate.use(idioma);
+            };
+        });
+    </script>
+</body>
+</html>
